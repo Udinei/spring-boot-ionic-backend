@@ -2,11 +2,20 @@ package com.udineisilva.cursomc.domain;
 
 import java.io.Serializable;
 
-// Serializable - Para os objetos serem gravados em arquivos e trafegados em rede
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+// Serializable - Serva para fazer com que objetos sejam gravados em arquivos e/ou trafegados em rede
+@Entity
 public class Categoria implements Serializable {
 		
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	

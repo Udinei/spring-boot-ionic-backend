@@ -13,8 +13,9 @@ import com.udineisilva.cursomc.domain.Categoria;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@RequestMapping(method=RequestMethod.GET)
+	
 	//@GetMapping
+	@RequestMapping(method=RequestMethod.GET)
 	public List<Categoria> listar(){
 		Categoria cat1 = new Categoria(1, "Informatica");
 		Categoria cat2 = new Categoria(2, "Escritorio");
