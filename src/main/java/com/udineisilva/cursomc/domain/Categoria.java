@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 // Serializable - Serva para fazer com que objetos sejam gravados em arquivos e/ou trafegados em rede
 @Entity
@@ -22,6 +24,9 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	// @JsonManagedReference - é utilizado para evitar a referencia ciclica com produtos, que gera o 
+	// erro Expected ',' instead of 't' no browser. E informa que esse lado é vai recuperar os dados
+	@JsonManagedReference 
 	@ManyToMany(mappedBy="categorias")
 	List<Produto> produtos = new ArrayList<>();
 	
@@ -93,7 +98,8 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+
 	
 
 
