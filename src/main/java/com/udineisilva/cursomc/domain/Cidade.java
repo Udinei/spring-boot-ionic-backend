@@ -14,6 +14,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Cidade implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
