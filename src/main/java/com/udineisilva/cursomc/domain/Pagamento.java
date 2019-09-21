@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.udineisilva.cursomc.domain.enums.EstadoPagamento;
 
 // abstract - garante que a classe nao sera instanciada com new, somente as classes filhas serao instanciada.
@@ -24,7 +24,7 @@ public abstract class Pagamento implements Serializable {
 	private Integer id;
 	private Integer estado;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId
