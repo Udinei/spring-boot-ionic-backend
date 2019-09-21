@@ -5,22 +5,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.udineisilva.cursomc.domain.Cliente;
-import com.udineisilva.cursomc.repositories.ClienteRepository;
+import com.udineisilva.cursomc.domain.Categoria;
+import com.udineisilva.cursomc.domain.Pedido;
+import com.udineisilva.cursomc.repositories.PedidoRepository;
 import com.udineisilva.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ClienteService {
+public class PedidoService {
 	
 	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	public Cliente find(Integer id){
-		Optional<Cliente> obj = clienteRepository.findById(id);
+	private PedidoRepository pedidoRepository;
+		
+	public Pedido find(Integer id){
+		Optional<Pedido> obj = pedidoRepository.findById(id);
 		
 		// caso o objeto nao exista sera lancado uma exceção informando o id e o nome da classe do objeto
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! id: " + id 
-				+ ", tipo: " + Cliente.class.getName())); 
+				+ ", tipo: " + Pedido.class.getName())); 
 			
 	}
 	

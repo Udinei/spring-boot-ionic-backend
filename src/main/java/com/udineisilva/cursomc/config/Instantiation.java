@@ -12,6 +12,7 @@ import com.udineisilva.cursomc.domain.Cidade;
 import com.udineisilva.cursomc.domain.Cliente;
 import com.udineisilva.cursomc.domain.Endereco;
 import com.udineisilva.cursomc.domain.Estado;
+import com.udineisilva.cursomc.domain.ItemPedido;
 import com.udineisilva.cursomc.domain.Pagamento;
 import com.udineisilva.cursomc.domain.PagamentoComBoleto;
 import com.udineisilva.cursomc.domain.PagamentoComCartao;
@@ -24,6 +25,7 @@ import com.udineisilva.cursomc.repositories.CidadeRepository;
 import com.udineisilva.cursomc.repositories.ClienteRepository;
 import com.udineisilva.cursomc.repositories.EnderecoRepository;
 import com.udineisilva.cursomc.repositories.EstadoRepository;
+import com.udineisilva.cursomc.repositories.ItemPedidoRepository;
 import com.udineisilva.cursomc.repositories.PagamentoRepository;
 import com.udineisilva.cursomc.repositories.PedidoRepository;
 import com.udineisilva.cursomc.repositories.ProdutoRepository;
@@ -49,13 +51,15 @@ public class Instantiation implements CommandLineRunner{
 	    
 	    @Autowired
 	    private ClienteRepository clienteRepository;
+	    	    
+	    @Autowired
+	    private PagamentoRepository pagamentoRepository;
 	    
 	    @Autowired
 	    private PedidoRepository pedidoRepository;
 	    
 	    @Autowired
-	    private PagamentoRepository pagamentoRepository;
-	    
+	    private ItemPedidoRepository itemPedidoRepository;
 	    
 		@Override
 		public void run(String... args) throws Exception {
@@ -67,6 +71,8 @@ public class Instantiation implements CommandLineRunner{
 			Produto p2 = new Produto(null, "Impressora", 2000.00);
 			Produto p3 = new Produto(null, "Mouse", 2000.00);
 			
+			produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+			
 			cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 			cat2.getProdutos().addAll(Arrays.asList(p2));
 			
@@ -75,7 +81,7 @@ public class Instantiation implements CommandLineRunner{
 			p3.getCategorias().addAll(Arrays.asList(cat1));
 								
 			categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-			produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+			
 			
 			Estado est1 = new Estado(null, "Minas Gerais");
 			Estado est2 = new Estado(null, "São Paulo");
@@ -117,6 +123,19 @@ public class Instantiation implements CommandLineRunner{
 			
 			pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 			pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+			
+			ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+			ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+			ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+			
+			ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+			ped2.getItens().addAll(Arrays.asList(ip3));
+			
+			p1.getItens().addAll(Arrays.asList(ip1));
+			p2.getItens().addAll(Arrays.asList(ip3));
+			p3.getItens().addAll(Arrays.asList(ip2));
+			
+			itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 			
 	}
 
