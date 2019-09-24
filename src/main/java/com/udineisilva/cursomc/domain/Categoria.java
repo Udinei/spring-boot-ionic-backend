@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 // Serializable - Serva para fazer com que objetos sejam gravados em arquivos e/ou trafegados em rede
 @Entity
@@ -26,7 +28,7 @@ public class Categoria implements Serializable {
 	// erro Expected ',' instead of 't' no browser. E informa que esse lado é vai recuperar os dados
 	
 	@ManyToMany(mappedBy="categorias")
-	List<Produto> produtos = new ArrayList<>();
+	private List<Produto> produtos = new ArrayList<>();
 	
 	
 	// instancia o objeto sem atribuir nada aos atributos
