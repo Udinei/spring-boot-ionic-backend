@@ -68,8 +68,8 @@ public class Instantiation implements CommandLineRunner{
 			Categoria cat2 = new Categoria(null, "Escritório");
 		
 			Produto p1 = new Produto(null, "Computador", 2000.00);
-			Produto p2 = new Produto(null, "Impressora", 2000.00);
-			Produto p3 = new Produto(null, "Mouse", 2000.00);
+			Produto p2 = new Produto(null, "Impressora", 800.00);
+			Produto p3 = new Produto(null, "Mouse", 80.00);
 			
 			produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 			

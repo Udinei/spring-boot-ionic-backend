@@ -23,6 +23,12 @@ public class CategoriaService {
 				+ ", tipo: " + Categoria.class.getName())); 
 			
 	}
+
+	public Categoria insert(Categoria obj) {
+         obj.setId(null);
+         return categoriaRepository.save(obj);
+		
+	}
 	
 
 }
