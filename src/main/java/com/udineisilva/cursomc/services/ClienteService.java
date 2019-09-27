@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udineisilva.cursomc.domain.Cidade;
 import com.udineisilva.cursomc.domain.Cliente;
@@ -39,6 +40,13 @@ public class ClienteService {
 			
 	}
 	
+	@Transactional
+	public Cliente insert(Cliente obj) {
+		obj.setId(null);
+		obj = clienteRepository.save(obj);
+		EnderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
+	}
 
 	public Cliente update(Cliente obj) {
 		// verifica se o objeto existe
@@ -65,7 +73,7 @@ public class ClienteService {
 			clienteRepository.deleteById(id);
 			
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir um cliente porque que há entidades relacionadas");
+			throw new DataIntegrityException("Não é possivel excluir um cliente porque que há pedidos relacionados");
 
 		}
 	}
@@ -102,13 +110,4 @@ public class ClienteService {
 	}
 	
 	
-
-
-	public Cliente insert(Cliente obj) {
-		obj.setId(null);
-		obj = clienteRepository.save(obj);
-		EnderecoRepository.saveAll(obj.getEnderecos());
-		return obj;
-	}
-
 }
