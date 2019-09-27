@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.udineisilva.cursomc.domain.Cliente;
 import com.udineisilva.cursomc.dto.ClienteDTO;
+import com.udineisilva.cursomc.dto.ClienteNewDTO;
 import com.udineisilva.cursomc.services.ClienteService;
 
 @RestController
@@ -41,17 +42,18 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-//	@PostMapping
-//	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto){
-//		Cliente obj = clienteService.fromDTO(objDto);
-//		
-//		obj = clienteService.insert(obj);
-//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-//				.path("/{id}").buildAndExpand(obj.getId()).toUri();
-//		
-//		// retorna o codigo http = 201 se tudo ocorrer bem.
-//		return ResponseEntity.created(uri).build();
-//	}
+	
+	@PostMapping
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
+		Cliente obj = clienteService.fromDTO(objDto);
+		
+		obj = clienteService.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		// retorna o codigo http = 201 se tudo ocorrer bem.
+		return ResponseEntity.created(uri).build();
+	}
 	
 	
 	@PutMapping(value="/{id}")
