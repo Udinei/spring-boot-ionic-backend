@@ -49,11 +49,10 @@ public class PedidoService {
 
 	}
 
-	//@Transactional
+	@Transactional
 	public Pedido insert(Pedido pedido) {
 		pedido.setId(null);
 		pedido.setInstante(new Date());
-		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		
@@ -68,7 +67,6 @@ public class PedidoService {
 		for(ItemPedido ip : pedido.getItens()){
 			ip.setDesconto(0.0);
 			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
-			//ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(pedido);
 		}
 		

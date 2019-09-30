@@ -35,8 +35,6 @@ public class PedidoResource {
 	
 
 		@PostMapping
-		//@Produces(MediaType.APPLICATION_JSON)
-		//@Consumes(MediaType.APPLICATION_JSON)
 		public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
 			obj = pedidoService.insert(obj);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
