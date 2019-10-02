@@ -50,30 +50,32 @@ public class PedidoService {
 	}
 
 	@Transactional
-	public Pedido insert(Pedido pedido) {
-		pedido.setId(null);
-		pedido.setInstante(new Date());
-		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
-		pedido.getPagamento().setPedido(pedido);
+	public Pedido insert(Pedido obj) {
+		obj.setId(null);
+		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
+		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+		obj.getPagamento().setPedido(obj);
 		
-		if(pedido.getPagamento() instanceof PagamentoComBoleto){
-			PagamentoComBoleto pagto = (PagamentoComBoleto) pedido.getPagamento();
-			boletoService.preencherPagamentoComBoleto(pagto, pedido.getInstante());
+		if(obj.getPagamento() instanceof PagamentoComBoleto){
+			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		
-		pedido = pedidoRepository.save(pedido);
-		pagamentoRepository.save(pedido.getPagamento());
+		obj = pedidoRepository.save(obj);
+		pagamentoRepository.save(obj.getPagamento());
 		
-		for(ItemPedido ip : pedido.getItens()){
+		for(ItemPedido ip : obj.getItens()){
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
-			ip.setPedido(pedido);
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
+			ip.setPedido(obj);
 		}
 		
-		itemPedidoRepository.saveAll(pedido.getItens());
+		itemPedidoRepository.saveAll(obj.getItens());
 		
-		
-	return pedido;
+		System.out.println(obj);
+	return obj;
 }
 
 }
