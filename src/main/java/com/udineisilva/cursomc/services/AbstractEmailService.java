@@ -30,10 +30,5 @@ public abstract class AbstractEmailService implements EmailService {
 		return sm;
 	}
 
-	@Override
-	public void sendEmail(SimpleMailMessage msg) {
-		
-
-	}
 
 }

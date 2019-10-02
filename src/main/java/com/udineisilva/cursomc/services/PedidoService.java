@@ -37,7 +37,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
-	// EmailService é uma interface, que também sera instanciada durante os testes como um Bean na classe TestConfig */  
+	// EmailService é uma interface, que também sera instanciada durante os testes como um Bean na classe TestConfig para MockEmailService */  
 	@Autowired
 	private EmailService emailService;
 
