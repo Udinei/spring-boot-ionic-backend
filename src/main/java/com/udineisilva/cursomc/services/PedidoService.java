@@ -37,7 +37,9 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
-	
+	// EmailService é uma interface, que também sera instanciada durante os testes como um Bean na classe TestConfig */  
+	@Autowired
+	private EmailService emailService;
 
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
@@ -73,8 +75,8 @@ public class PedidoService {
 		}
 		
 		itemPedidoRepository.saveAll(obj.getItens());
+		emailService.senderOrderConfirmationEmail(obj);
 		
-		System.out.println(obj);
 	return obj;
 }
 
