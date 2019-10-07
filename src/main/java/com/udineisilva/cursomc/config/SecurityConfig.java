@@ -50,9 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				"/categorias/**"
 	};
 
-	// permite o acesso, os clientes podem cadastrar a sim mesmo sem estar logado
+	// endpoints que estão liberado o acesso via POST, mesmo sem o usuario estar logado
 		private static final String[] PUBLIC_MATCHERS_POST = {
-				"/clientes/**"
+				"/clientes/**",
+				"/auth/forgot/**" // esqueceu a senha
 		};
 	
 	@Override
