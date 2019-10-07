@@ -40,7 +40,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		
 		if(header != null && header.startsWith("Bearer ")){
 			// libera autorizacao do usuario
-			UsernamePasswordAuthenticationToken auth = getAuthentication(request, header.substring(7));
+			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
 			
 			if(auth != null){
 				SecurityContextHolder.getContext().setAuthentication(auth);
@@ -52,7 +52,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	// verifica se o  usuario esta autorizado 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
+	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         
 		if(jwtUtil.tokenValido(token)){
 			String username = jwtUtil.getUsername(token);
