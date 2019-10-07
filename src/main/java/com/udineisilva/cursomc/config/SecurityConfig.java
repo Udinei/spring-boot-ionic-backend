@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.udineisilva.cursomc.security.JWTAuthenticationFilter;
+import com.udineisilva.cursomc.security.JWTAuthorizationFilter;
 import com.udineisilva.cursomc.security.JWTUtil;
 
 @Configuration
@@ -64,7 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		// adicionando Filtro de autenticação JWT na aplicacao 
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-			
+		
+		// adicionando Filtro de autorizacão JWT na aplicacao 
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+
 		// Não permite a aplicação guardar sessões de estado 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
