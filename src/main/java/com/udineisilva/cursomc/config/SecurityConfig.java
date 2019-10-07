@@ -7,21 +7,32 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.udineisilva.cursomc.security.JWTAuthenticationFilter;
+import com.udineisilva.cursomc.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
+	private JWTUtil jwtUtil;
+	
+	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private UserDetailsService userDetailsService; 
 	
 	
 	// acesso publico permite o acesso a todos as urls abaixo sem autenticação
@@ -51,9 +62,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(PUBLIC_MATCHERS).permitAll()                      // todos os metodos GET, PUT, POST, DELETE   
 		.anyRequest().authenticated(); // Os acessos daqui pra cima esta liberado, daqui para baixo exige autenticação
 		
-		// Não permite a aplicação criar sessao de usuarios
+		// adicionando Filtro de autenticação JWT na aplicacao 
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+			
+		// Não permite a aplicação guardar sessões de estado 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
+	}
+	
+	// Esse metodo identifica qual classe é capaz de ideintificar o usuario por email
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		 auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
 	
