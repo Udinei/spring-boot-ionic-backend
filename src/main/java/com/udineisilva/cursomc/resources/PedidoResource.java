@@ -5,6 +5,7 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.udineisilva.cursomc.domain.Categoria;
 import com.udineisilva.cursomc.domain.Pedido;
+import com.udineisilva.cursomc.dto.CategoriaDTO;
 import com.udineisilva.cursomc.services.PedidoService;
 
 @RestController
@@ -42,5 +46,18 @@ public class PedidoResource {
 			
 			// retorna o codigo http = 201 se tudo ocorrer bem.
 			return ResponseEntity.created(uri).build();
+		}
+		
+		// @RequestParam - permite passar os parametros na forma ex:
+		@GetMapping
+		public ResponseEntity<Page<Pedido>> findPage(
+				@RequestParam(value="page", defaultValue="0") Integer page,
+				@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+				@RequestParam(value="orderBy", defaultValue="instante") String orderBy,
+				@RequestParam(value="direction", defaultValue="DESC") String direction){
+			
+			Page<Pedido> list = pedidoService.findPage(page, linesPerPage, orderBy, direction);
+			return ResponseEntity.ok().body(list);
+			
 		}
 }
