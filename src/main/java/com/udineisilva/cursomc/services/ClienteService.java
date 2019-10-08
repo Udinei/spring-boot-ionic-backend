@@ -1,5 +1,6 @@
 package com.udineisilva.cursomc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.udineisilva.cursomc.domain.Cidade;
 import com.udineisilva.cursomc.domain.Cliente;
@@ -37,6 +39,9 @@ public class ClienteService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPassword;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public Cliente find(Integer id){
 		UserSS user = UserService.authenticated();
@@ -69,14 +74,6 @@ public class ClienteService {
 		return clienteRepository.save(newObj);
 	}
     
-	// metodo auxiliar de update tendo em vista, que o cnpj e o tipo não pode ser alterado
-	// e objeto sera exibido na tela apos a alteração, evitando assim que cpnpj e tipo 
-	// sejam exibidos em branco
-	private void updateData(Cliente newObj, Cliente obj) {
-		newObj.setNome(obj.getNome());
-		newObj.setEmail(obj.getEmail());
-	}
-
 
 	public void delete(Integer id) {
 		// verifica se o objeto existe
@@ -121,6 +118,18 @@ public class ClienteService {
 		
 		return cli;
 	}
+
+	// metodo auxiliar de update tendo em vista, que o cnpj e o tipo não pode ser alterado
+	// e objeto sera exibido na tela apos a alteração, evitando assim que cpnpj e tipo 
+	// sejam exibidos em branco
+	private void updateData(Cliente newObj, Cliente obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());
+	}
 	
 	
+	// faz o upload do profile do cliente para a amazon S3 
+	public URI uploadProfilePicture(MultipartFile multipartFile){
+		return s3Service.uploadFile(multipartFile);
+	}
 }

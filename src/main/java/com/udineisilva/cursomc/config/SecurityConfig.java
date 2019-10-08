@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	// endpoints que estão liberado o acesso via POST, mesmo sem o usuario estar logado
 		private static final String[] PUBLIC_MATCHERS_POST = {
 				"/clientes/**",
+				"/clientes/picture",
 				"/auth/forgot/**" // esqueceu a senha
 		};
 	
