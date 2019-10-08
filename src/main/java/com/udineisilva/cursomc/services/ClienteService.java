@@ -130,6 +130,18 @@ public class ClienteService {
 	
 	// faz o upload do profile do cliente para a amazon S3 
 	public URI uploadProfilePicture(MultipartFile multipartFile){
-		return s3Service.uploadFile(multipartFile);
+		UserSS user = UserService.authenticated();
+		
+		if(user == null){
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Optional<Cliente> cliente = clienteRepository.findById(user.getId());
+		cliente.get().setImageUrl(uri.toString());
+		clienteRepository.save(cliente.get());
+		
+		return uri;
 	}
 }
