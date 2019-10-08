@@ -1,4 +1,4 @@
-package com.udineisilva.cursomc.resources.execption;
+package com.udineisilva.cursomc.resources.exception;
 
 import java.util.ArrayList;
 import java.util.List;

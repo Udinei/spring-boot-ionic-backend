@@ -1,4 +1,4 @@
-package com.udineisilva.cursomc.resources.execption;
+package com.udineisilva.cursomc.resources.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,8 +9,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.udineisilva.cursomc.services.exceptions.AuthorizationException;
 import com.udineisilva.cursomc.services.exceptions.DataIntegrityException;
+import com.udineisilva.cursomc.services.exceptions.FileException;
 import com.udineisilva.cursomc.services.exceptions.ObjectNotFoundException;
 
 /** Essa classe é um manipulador de exceção dos resources da aplicação.
@@ -19,7 +23,7 @@ import com.udineisilva.cursomc.services.exceptions.ObjectNotFoundException;
  *  que sera executado quando a excecao for lancada.
  *  */
 @ControllerAdvice
-public class ResoureceExceptionHandler {
+public class ResourceExceptionHandler {
 	
 	// Quando a excecao ObjectNotFoundException que eu criei for lancada chama o metodo - objectNotFoundExcepciont
 	// e os dados vindos da requisicao em HttpServletRequest
@@ -61,11 +65,58 @@ public class ResoureceExceptionHandler {
 	@ExceptionHandler(AuthorizationException.class) 
 	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request){
 		
-		// lança codigo http =  BAD_REQUEST  
+		// lança codigo http =  
 		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
 		
 		// retorna a classe StandardError no formato json com os dados do erro pra o browser 
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 		
 	}
+	
+	@ExceptionHandler(FileException.class) 
+	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request){
+		
+		// lança codigo http =  
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		
+		// retorna a classe StandardError no formato json com os dados do erro pra o browser 
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		
+	}
+	
+	@ExceptionHandler(AmazonServiceException.class) 
+	public ResponseEntity<StandardError> amazonService(AmazonServiceException e, HttpServletRequest request){
+		
+		HttpStatus code = HttpStatus.valueOf(e.getErrorCode());
+		
+		// lança codigo http =  
+		StandardError err = new StandardError(code.value(), e.getMessage(), System.currentTimeMillis());
+		
+		// retorna a classe StandardError no formato json com os dados do erro pra o browser 
+		return ResponseEntity.status(code).body(err);
+	}
+	
+	@ExceptionHandler(AmazonClientException.class) 
+	public ResponseEntity<StandardError> amazonClient(AmazonClientException e, HttpServletRequest request){
+		
+		// lança codigo http =  
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		
+		// retorna a classe StandardError no formato json com os dados do erro pra o browser 
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		
+	}
+	
+	@ExceptionHandler(AmazonS3Exception.class) 
+	public ResponseEntity<StandardError> amazonS3(AmazonS3Exception e, HttpServletRequest request){
+		
+		// lança codigo http =  
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		
+		// retorna a classe StandardError no formato json com os dados do erro pra o browser 
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		
+	}
+
+	
 }

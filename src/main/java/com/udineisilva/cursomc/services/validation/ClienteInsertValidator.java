@@ -12,7 +12,7 @@ import com.udineisilva.cursomc.domain.Cliente;
 import com.udineisilva.cursomc.domain.enums.TipoCliente;
 import com.udineisilva.cursomc.dto.ClienteNewDTO;
 import com.udineisilva.cursomc.repositories.ClienteRepository;
-import com.udineisilva.cursomc.resources.execption.FieldMessage;
+import com.udineisilva.cursomc.resources.exception.FieldMessage;
 import com.udineisilva.cursomc.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {

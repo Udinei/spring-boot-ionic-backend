@@ -11,8 +11,7 @@ import com.udineisilva.cursomc.services.S3Service;
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 
-	@Autowired
-	private S3Service s3Service;
+	
 
 	
 	public static void main(String[] args) {
@@ -21,7 +20,7 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		 //s3Service.uploadFile("E:\\Cursos\\Udemy-Nelio_Alves\\pdf_curso\\ana.jpg");
+		 
 	}
 
 }
