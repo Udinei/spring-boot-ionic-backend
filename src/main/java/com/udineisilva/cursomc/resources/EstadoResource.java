@@ -33,7 +33,8 @@ public class EstadoResource {
 		List<EstadoDTO> listDto = list.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);
 	}
-
+	
+    // busca cidades por id do Estado
 	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
 	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Integer estadoId) {
 		List<Cidade> list = cidadeService.findByEstado(estadoId);
