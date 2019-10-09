@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	// permite o acesso somente de leitura, a todas as urls abaixo sem autenticacao
 	private static final String[] PUBLIC_MATCHERS_GET = {
 				"/produtos/**",
-				"/categorias/**"
+				"/categorias/**",
+				"/estados/**"
 	};
 
 	// endpoints que estão liberado o acesso via POST, mesmo sem o usuario estar logado
