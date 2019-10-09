@@ -64,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
+		
 		// desabilita a proteção de ataques CSRF, pois a aplicação não trabalha com sessão
 		http.cors().and().csrf().disable(); 
 		http.authorizeRequests()
