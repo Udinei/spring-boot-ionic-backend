@@ -73,10 +73,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(PUBLIC_MATCHERS).permitAll()                      // todos os metodos GET, PUT, POST, DELETE   
 		.anyRequest().authenticated(); // Os acessos daqui pra cima esta liberado, daqui para baixo exige autenticação
 		
-		// adicionando Filtro de autenticação JWT na aplicacao 
+		// adicionando Filtro de autEnticação JWT na aplicacao 
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		
-		// adicionando Filtro de autorizacão JWT na aplicacao 
+		// adicionando Filtro de autOrizacão JWT na aplicacao, sem ele também não é possivel listar pedidos e outros endpoints protegidos 
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 
 		// Não permite a aplicação guardar sessões de estado 

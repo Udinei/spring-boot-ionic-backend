@@ -9,6 +9,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/** Essa classe gera o token, a ser enviado nas requisições, com base 
+ * no algoritimo HS512 e na palavra secret,    */
 @Component
 public class JWTUtil {
 	

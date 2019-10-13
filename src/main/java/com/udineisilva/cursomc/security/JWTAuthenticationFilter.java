@@ -20,14 +20,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udineisilva.cursomc.dto.CredenciaisDTO;
                                              
+/**
+ * Esse classe intercepta as requisições de login (nota: /login é um caminho reservado do spring security)
+ * para tanto deve estender a classe UsernamePasswordAuthenticationFilter 
+ * */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
+	// Os dois atributos abaixo seram injetados via o construtor da classe
 	private AuthenticationManager authenticationManager;
-	
 	private JWTUtil jwtUtil;
 	
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
-		// corrige o erro de falhas na autenticação
+		// se houver erros, corrige o erro de falhas na autenticação
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		
 		this.authenticationManager = authenticationManager;
@@ -52,11 +56,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication auth = authenticationManager.authenticate(authToken);
 			return auth;
 			
-		} catch (Exception e) {
-
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 		
-	 return null;	
+		
 	}
 	
 	
@@ -71,11 +75,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authorization", "Bearer " + token);
 		res.addHeader("access-control-expose-headers", "Authorization");
+		                                                
+		System.out.println("Herder expose... : " + res.getHeaders("access-control-expose-headers")); 
+		System.out.println("Herder Authorization... : " + res.getHeader("Authorization"));
 		
-		
+		// apos autenticar libera as requisições
+		// eu que coloquei chain.doFilter(req, res);		                                   
 	}
 	
-	
+	// caso a auteniicação fallhar essa classe sera executada
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
 		@Override
