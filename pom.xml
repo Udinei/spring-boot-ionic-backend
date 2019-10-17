@@ -94,11 +94,18 @@
 			<version>LATEST</version>
 		</dependency>
 
-        <!-- usado para redimensionar imagens png, jpg etc.. -->  
+		<!-- usado para redimensionar imagens png, jpg etc.. -->
 		<dependency>
 			<groupId>org.imgscalr</groupId>
 			<artifactId>imgscalr-lib</artifactId>
 			<version>4.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.29.1</version>
 		</dependency>
 
 

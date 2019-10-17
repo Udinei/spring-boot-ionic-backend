@@ -80,7 +80,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		System.out.println("Herder Authorization... : " + res.getHeader("Authorization"));
 		
 		// apos autenticar libera as requisições
-		// eu que coloquei chain.doFilter(req, res);		                                   
+		// chain.doFilter(req, res);		                                   
 	}
 	
 	// caso a auteniicação fallhar essa classe sera executada
@@ -98,7 +98,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		private String json(){
 			long date = new Date().getTime();
-			return "{\"timestatmp\"}" + date + ","
+			return "{\"timestatmp\": " + date + ","
 					+ "\"status\": 401, "
 					+ "\"error\": \"Não autorizado\", "
 					+ "\"message\": \"Email ou senha inválidos\", "

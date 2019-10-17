@@ -36,6 +36,7 @@ public class Cliente implements Serializable{
 	private String email;
 	
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
 	@JsonIgnore
@@ -158,13 +159,7 @@ public class Cliente implements Serializable{
 		this.senha = senha;
 	}
 
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
-
 	
-
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}

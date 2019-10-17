@@ -25,6 +25,7 @@ import com.udineisilva.cursomc.services.exceptions.ObjectNotFoundException;
 @Service
 public class PedidoService {
 
+		
 	@Autowired
 	private PedidoRepository pedidoRepository;
 

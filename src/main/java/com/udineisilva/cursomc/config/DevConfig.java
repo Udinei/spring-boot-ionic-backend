@@ -32,7 +32,7 @@ public class DevConfig {
 		}
 	
 		// chama o servico pra instanciação dos objetos da aplicação em banco de dados
-		dbService.intantiateTestDatabase();
+		dbService.instantiateTestDatabase();
 		return true;
 		
 	}

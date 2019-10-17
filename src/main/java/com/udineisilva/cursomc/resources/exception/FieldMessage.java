@@ -2,6 +2,9 @@ package com.udineisilva.cursomc.resources.exception;
 
 import java.io.Serializable;
 
+/**
+ * Essa classe carrega as mensagens de erro de validação
+ * */
 public class FieldMessage implements Serializable {
 
 	private static final long serialVersionUID = 1L;
