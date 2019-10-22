@@ -21,25 +21,38 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 @PropertySource( value = { "file:${USERPROFILE}/.s3amazon.cursomc/s3amazon-cred.properties"}, ignoreResourceNotFound = true) // busca na pasta do sistema do usuario logado
 public class S3Config {
 	
+	private String awsId;
+
+	private String awsKey;
+	
 	// injeta objeto que acessa o classpath da aplicacao env
 	@Autowired
 	private Environment env;
 		
-	//*@Value("${aws.access_key_id}")
-	private String awsId;
+	@Value("${spring.profiles.active}")
+	private String profile;
 
-	//@Value("${aws.secret_access_key}")
-	private String awsKey;
-	
-	
+	@Value("${aws.secret_access_key}")
+	private String awsKeyProd;
+
+	@Value("${aws.access_key_id}")
+	private String awsIdProd;
+		
 	@Value("${s3.region}")
 	private String region;
 
 	@Bean
 	public AmazonS3 s3client() {
-		// obtendo localmente as chaves de acesso do S3 Amazon
-		awsId = env.getProperty("aws.access_key_id");
-		awsKey = env.getProperty("aws.secret_access_key");
+		
+		if(profile.equals("prod")){
+			awsId =awsIdProd;
+			awsKey =  awsKeyProd;
+			
+		}else if(profile.equals("dev") || profile.equals("test")){
+			// obtendo localmente as chaves de acesso do S3 Amazon
+			awsId = env.getProperty("aws.access_key_id");
+			awsKey = env.getProperty("aws.secret_access_key");
+		}
 		
 		
 		BasicAWSCredentials awsCred = new BasicAWSCredentials(awsId, awsKey);
