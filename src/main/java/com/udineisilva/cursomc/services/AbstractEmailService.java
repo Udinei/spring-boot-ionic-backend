@@ -23,7 +23,7 @@ public abstract class AbstractEmailService implements EmailService {
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+		
 	
 	@Value("${default.sender}")
 	private String sender;
@@ -31,6 +31,7 @@ public abstract class AbstractEmailService implements EmailService {
 	@Override
 	public void sendOrderConfirmationEmail(Pedido obj) {
 		SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
+		
 		/* sendEMail - sendo usado como Padrao de projeto (Template metodo), esta sendo usado antes de sua implementação, mas esta declarado na interface */
         sendEmail(sm);
 	}

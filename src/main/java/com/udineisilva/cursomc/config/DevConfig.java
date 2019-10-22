@@ -12,6 +12,9 @@ import com.udineisilva.cursomc.services.DBService;
 import com.udineisilva.cursomc.services.EmailService;
 import com.udineisilva.cursomc.services.SmtpEmailService;
 	
+/** Essa classe define as configuração em tempo de desenvolvimento 
+ *  Classe de instanciação e população do BD Mysql,
+ *  Classe de email*/
 @Configuration
 @Profile("dev")
 public class DevConfig {

@@ -111,6 +111,7 @@ public class Pedido implements Serializable {
 		this.itens = itens;
 	}
 		
+	/** Esse metodo retorna o pedido em forma de string. Os dados do pedido */
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));

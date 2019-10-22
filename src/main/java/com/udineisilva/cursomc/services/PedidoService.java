@@ -83,8 +83,8 @@ public class PedidoService {
 		
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
-		
-			return obj;
+				
+		return obj;
 	}
 	
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
