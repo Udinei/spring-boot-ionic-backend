@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 // Serializable - Serva para fazer com que objetos sejam gravados em arquivos e/ou trafegados em rede
 @Entity

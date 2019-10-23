@@ -1,11 +1,8 @@
 package com.udineisilva.cursomc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.udineisilva.cursomc.services.S3Service;
 
 
 @SpringBootApplication
